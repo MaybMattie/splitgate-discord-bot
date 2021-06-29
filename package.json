@@ -1,0 +1,16 @@
+{
+  "name": "Splitgate Bot",
+  "version": "0.0.1",
+  "description": "Discord bot built for the Splitgate Discord",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "MaybeMattie",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "mongoose": "^5.12.14"
+  }
+}

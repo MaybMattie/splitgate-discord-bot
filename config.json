@@ -1,0 +1,4 @@
+{
+    "prefix": "!",
+    "mongoPath": "mongodb://localhost:27017"
+}
