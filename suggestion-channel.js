@@ -183,7 +183,13 @@ module.exports = (client) => {
                     })
                 }, 1000 * 2)
             }
-
+            for(word in content.split(/[ ]+/)) {
+                if (word.toLowerCase() === 'hacker' || word.toLowerCase() === 'hacks') {
+                    member.createDM((client, data) => {
+                        console.log(data)
+                    })
+                }
+            }
             // Creates a new embed with the user's information, sends it, reacts to it, and deletes the user's message
             const embed = new Discord.MessageEmbed()
                 .setAuthor(member.displayName, member.user.displayAvatarURL())
