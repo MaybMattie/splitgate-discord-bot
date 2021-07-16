@@ -184,6 +184,7 @@ module.exports = (client) => {
                 }, 1000 * 2)
             }
             for(word in content.split(/[ ]+/)) {
+                console.log(word)
                 if (word.toLowerCase() === 'hacker' || word.toLowerCase() === 'hacks') {
                     member.user.send('Testing').catch(async () => {
                         let sentMessage = await channel.send('could not send a dm')
