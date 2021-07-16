@@ -185,9 +185,13 @@ module.exports = (client) => {
             }
             for(word in content.split(/[ ]+/)) {
                 if (word.toLowerCase() === 'hacker' || word.toLowerCase() === 'hacks') {
-                    member.createDM((client, data) => {
-                        console.log(data)
+                    member.user.send('Testing').catch(async () => {
+                        let sentMessage = await channel.send('could not send a dm')
+                        setTimeout(() => {
+                            sentMessage.delete()
+                        }, 1000 * 2)
                     })
+                    return
                 }
             }
             // Creates a new embed with the user's information, sends it, reacts to it, and deletes the user's message
