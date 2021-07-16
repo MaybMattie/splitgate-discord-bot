@@ -85,8 +85,8 @@ module.exports = (client, commandOptions) => {
 
                 // Ensure the user has the required roles
                 for (const requiredRole of requiredRoles) {
-                    const role = guild.roles.chache.find(role => role.name === requiredRole);
-                    if (!role || !member.roles.chache.has(role.id)) {
+                    const role = guild.roles.cache.find(role => role.name === requiredRole);
+                    if (!role || !member.roles.cache.has(role.id)) {
                         message.reply(`You must have the "${requiredRole}" role to use this command`);
                         return;
                     }

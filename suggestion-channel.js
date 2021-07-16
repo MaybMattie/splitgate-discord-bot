@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
 const { prefix } = require('./config.json')
 const topSuggestions = require('./top-suggestions-channel')
-const channelID = '856262042984906762'
+const channelID = '865721400357552128'
 
 let recentlyUsed = [] //userId
 let usersReacted = [] //userId-messageID
@@ -12,10 +12,143 @@ let paused = false
 let command = 'pause'
 var pausedMessage
 var unpausedMessage
+let hackMessages = ['hacker', 'hacking', 'hacks', 'hackers', 'hack', 'cheating', 'cheaters', 'cheats', 'aimbot']
+let numSliding = 0
+let numMantling = 0
 
 module.exports = (client) => {
-    client.on('messageReactionAdd', async (messageReaction, user) => {
+    // Handles turning user text into embeds with the content in the Suggestions channel... among other things now.
+    client.on('message', async message => {
+        // Deconstructs variables from the message
+        const { member, channel, guild, content } = message
+        if (member === null) return
+        const memberID = member.id
 
+        // If the message includes anything about 'hacking' a dm will be created with that user
+        for (word of content.split(' ')) {
+            if (hackMessages.includes(word.toLowerCase())) {
+                let embed = new Discord.MessageEmbed().setTitle('Unfortunately, we had to delete your message...')
+                    .setDescription('We take reports of cheating/hacking very seriously. Please send your report to the <#351451689938583552> channel so swift action can be taken.')
+                    .setColor('#f54242')
+                member.user.send(embed).catch(async () => {
+                    let sentMessage = await channel.send('could not send a dm')
+                    setTimeout(() => {
+                        sentMessage.delete()
+                    }, 1000 * 2)
+                })
+                message.delete()
+                return
+            }
+            if (word === 'sliding' || word === 'slide') {
+                numSliding++
+            }
+            if (word === 'mantling' || word === 'mantle') {
+                numMantling++
+            }
+        }
+
+        if (content.toLowerCase().startsWith(`${prefix}list`)) {
+            if (member.roles.cache.find(role => role.name === 'Moderator')) {
+                let embed = new Discord.MessageEmbed()
+                    .setTitle('Number of times ___ has been suggested...')
+                    .addFields(
+                        { name: 'Sliding', value: numSliding },
+                        { name: 'Mantling', value: numMantling }
+                    )
+                    .setColor('#428df5')
+                    .setFooter('This information is not EXACT because I implemented this lazily <3 - mattie')
+                message.channel.send(embed)
+            }
+        }
+
+        // Checks to make sure the message is from the Suggestions channel and the user who sent it isn't the bot
+        if (channel.id === channelID && member.id !== client.user.id) {
+            // Checks if the command "!pause" is being run
+            if (content.toLowerCase().startsWith(`${prefix}pause`)) {
+
+                // Checks if the user using the command has the right role
+                if (member.roles.cache.find(role => role.name === 'Moderator')) {
+
+                    // Pauses the channel if it's not currently paused
+                    if (content.toLowerCase().startsWith(`${prefix}pause`) && paused === false) {
+                        message.delete()
+                        paused = true
+                        let embed = new Discord.MessageEmbed()
+                            .setTitle('This channel has been Paused')
+                            .setColor('#000000')
+                        pausedMessage = await message.channel.send(embed)
+                        return
+                    }
+
+                    // Unpauses the channel if it is currently paused
+                    if (content.toLowerCase().startsWith(`${prefix}${command}`) && paused) {
+                        if (!member.roles.cache.find(role => role.name === 'Moderator')) return
+                        message.delete()
+                        let embed = new Discord.MessageEmbed()
+                            .setTitle('This channel has been Unpaused')
+                            .setColor('#000000')
+                        unpausedMessage = await message.channel.send(embed)
+                        paused = false
+                        setTimeout(() => {
+                            pausedMessage.delete()
+                            unpausedMessage.delete()
+                        }, 1000 * 1)
+                        return
+                    }
+                } else {
+                    // Replys saying that you have to have a specific role to use that command
+                    message.delete()
+                    let sentMessage = await message.reply('You need to be a moderator to use this command!')
+                    setTimeout(() => {
+                        sentMessage.delete()
+                    }, 1000 * 2)
+                    return
+                }
+            }
+            // Checks to see if the channel is pasued and deletes the message if it is
+            if (paused) {
+                message.delete()
+                let sentMessage = await message.reply('This channel is paused')
+                setTimeout(() => {
+                    sentMessage.delete()
+                }, 1000 * 3)
+                return
+            }
+            // Checks to see if the user recently typed something to avoid suggestion spam
+            if (recentlyUsed.includes(memberID)) {
+                message.delete()
+                let sentMessage = await message.reply('You can only make a suggestion every hour!')
+                // Deletes the reply after 5 seconds
+                setTimeout(() => {
+                    sentMessage.delete()
+                }, 1000 * 5)
+                return
+            } else {
+                // Adds the user the recently used to make sure they can't spam
+                recentlyUsed.push(memberID)
+                // After a specified time, removes the user from the array
+                setTimeout(() => {
+                    recentlyUsed = recentlyUsed.filter((id) => {
+                        return id !== memberID
+                    })
+                }, 1000 * 2)
+            }
+
+            // Creates a new embed with the user's information, sends it, reacts to it, and deletes the user's message
+            const embed = new Discord.MessageEmbed()
+                .setAuthor(member.displayName, member.user.displayAvatarURL())
+                .setDescription(content)
+            Math.random() > 0.5 ? embed.setColor('#f54242') : embed.setColor('#428df5')
+            let sentEmbed = await channel.send(embed)
+            sentEmbed.react('👍')
+            sentEmbed.react('👎')
+            message.delete()
+            return;
+        }
+    })
+
+    // Handles message reaction updates
+    client.on('messageReactionAdd', async (messageReaction, user) => {
         let likeCount = 0
         let dislikeCount = 0
         // Doesn't execute for the bot's messages
@@ -24,6 +157,8 @@ module.exports = (client) => {
         // Deconstructs variables
         const { count, users, emoji, message } = messageReaction
         const { createdTimestamp } = message
+
+        if (message.channel.id !== channelID) return
 
         // Keeps like count and dislike count consistent for each suggestion
         for (const countReactions of messageCountReactions) {
@@ -102,109 +237,5 @@ module.exports = (client) => {
                 }
             }
         })
-    })
-
-    // Handles turning user text into embeds with the content in the Suggestions channel
-    client.on('message', async message => {
-
-        // Deconstructs variables from the message
-        const { member, channel, guild, content } = message
-        const memberID = member.id
-
-        // Checks to make sure the message is from the Suggestions channel and the user who sent it isn't the bot
-        if (channel.id === channelID && member.id !== client.user.id) {
-            // Checks if the command "!pause" is being run
-            if (content.toLowerCase().startsWith(`${prefix}pause`)) {
-
-                // Checks if the user using the command has the right role
-                if (member.roles.cache.find(role => role.name === 'Moderator')) {
-
-                    // Pauses the channel if it's not currently paused
-                    if (content.toLowerCase().startsWith(`${prefix}pause`) && paused === false) {
-                        message.delete()
-                        paused = true
-                        let embed = new Discord.MessageEmbed()
-                            .setTitle('This channel has been Paused')
-                            .setColor('#000000')
-                        pausedMessage = await message.channel.send(embed)
-                        return
-                    }
-
-                    // Unpauses the channel if it is currently paused
-                    if (content.toLowerCase().startsWith(`${prefix}${command}`) && paused) {
-                        if (!member.roles.cache.find(role => role.name === 'Moderator')) return
-                        message.delete()
-                        let embed = new Discord.MessageEmbed()
-                            .setTitle('This channel has been Unpaused')
-                            .setColor('#000000')
-                        unpausedMessage = await message.channel.send(embed)
-                        paused = false
-                        setTimeout(() => {
-                            pausedMessage.delete()
-                            unpausedMessage.delete()
-                        }, 1000 * 1)
-                        return
-                    }
-                } else {
-                    // Replys saying that you have to have a specific role to use that command
-                    message.delete()
-                    let sentMessage = await message.reply('You need to be a moderator to use this command!')
-                    setTimeout(() => {
-                        sentMessage.delete()
-                    }, 1000 * 2)
-                    return
-                }
-            }
-            // Checks to see if the channel is pasued and deletes the message if it is
-            if (paused) {
-                message.delete()
-                let sentMessage = await message.reply('This channel is paused')
-                setTimeout(() => {
-                    sentMessage.delete()
-                }, 1000 * 3)
-                return
-            }
-            // Checks to see if the user recently typed something to avoid suggestion spam
-            if (recentlyUsed.includes(memberID)) {
-                message.delete()
-                let sentMessage = await message.reply('You can only make a suggestion every hour!')
-                // Deletes the reply after 5 seconds
-                setTimeout(() => {
-                    sentMessage.delete()
-                }, 1000 * 5)
-                return
-            } else {
-                // Adds the user the recently used to make sure they can't spam
-                recentlyUsed.push(memberID)
-                // After a specified time, removes the user from the array
-                setTimeout(() => {
-                    recentlyUsed = recentlyUsed.filter((id) => {
-                        return id !== memberID
-                    })
-                }, 1000 * 2)
-            }
-            for(word in content.split(/[ ]+/)) {
-                console.log(word)
-                if (word.toLowerCase() === 'hacker' || word.toLowerCase() === 'hacks') {
-                    member.user.send('Testing').catch(async () => {
-                        let sentMessage = await channel.send('could not send a dm')
-                        setTimeout(() => {
-                            sentMessage.delete()
-                        }, 1000 * 2)
-                    })
-                    return
-                }
-            }
-            // Creates a new embed with the user's information, sends it, reacts to it, and deletes the user's message
-            const embed = new Discord.MessageEmbed()
-                .setAuthor(member.displayName, member.user.displayAvatarURL())
-                .setDescription(content)
-            Math.random() > 0.5 ? embed.setColor('#f54242') : embed.setColor('#428df5')
-            let sentEmbed = await channel.send(embed)
-            sentEmbed.react('👍')
-            sentEmbed.react('👎')
-            message.delete()
-            return;
-        }
     })
 }

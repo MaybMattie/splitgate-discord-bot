@@ -1,9 +1,9 @@
 const Discord = require('discord.js')
-const channelID = '856262071447322644'
+const channelID = '865721462193913917'
 var testEmbed
 
 module.exports = async (client, arr, message) => {
-    console.log(arr)
+    // console.log(arr)
 
     // Information deconstructed from the message
     let numSuggestions = arr.length

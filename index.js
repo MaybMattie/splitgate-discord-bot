@@ -9,7 +9,6 @@ const roleReactions = require('./role-reactions');
 
 client.on('ready', async () => {
     console.log('The bot is ready!');
-    return
     suggestionChannel(client)
     // roleReactions(client)
 
