@@ -1,5 +1,5 @@
 {
-  "name": "Splitgate Bot",
+  "name": "SplitgateBot",
   "version": "0.0.1",
   "description": "Discord bot built for the Splitgate Discord",
   "main": "index.js",
