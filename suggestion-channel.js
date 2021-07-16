@@ -10,6 +10,8 @@ let reactedString = ''
 let messageCountString = ''
 let paused = false
 let command = 'pause'
+var pausedMessage
+var unpausedMessage
 
 module.exports = (client) => {
     client.on('messageReactionAdd', async (messageReaction, user) => {
@@ -124,7 +126,7 @@ module.exports = (client) => {
                         let embed = new Discord.MessageEmbed()
                             .setTitle('This channel has been Paused')
                             .setColor('#000000')
-                        message.channel.send(embed)
+                        pausedMessage = await message.channel.send(embed)
                         return
                     }
 
@@ -135,12 +137,11 @@ module.exports = (client) => {
                         let embed = new Discord.MessageEmbed()
                             .setTitle('This channel has been Unpaused')
                             .setColor('#000000')
-                        message.channel.send(embed)
+                        unpausedMessage = await message.channel.send(embed)
                         paused = false
                         setTimeout(() => {
-                            channel.messages.fetch({ limit: 2 }).then(result => {
-                                channel.bulkDelete(result)
-                            })
+                            pausedMessage.delete()
+                            unpausedMessage.delete()
                         }, 1000 * 1)
                         return
                     }
