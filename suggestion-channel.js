@@ -27,6 +27,7 @@ module.exports = (client) => {
         // If the message includes anything about 'hacking' a dm will be created with that user
         for (word of content.split(' ')) {
             if (hackMessages.includes(word.toLowerCase())) {
+                if (message.channel.id !== 865721400357552128) return
                 let embed = new Discord.MessageEmbed().setTitle('Unfortunately, we had to delete your message...')
                     .setDescription('We take reports of cheating/hacking very seriously. Please send your report to the <#351451689938583552> channel so swift action can be taken.')
                     .setColor('#f54242')
