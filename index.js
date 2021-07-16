@@ -11,7 +11,7 @@ client.on('ready', async () => {
     console.log('The bot is ready!');
 
     suggestionChannel(client)
-    roleReactions(client)
+    // roleReactions(client)
 
     await mongo().then(mongoose => {
         try {
