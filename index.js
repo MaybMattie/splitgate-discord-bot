@@ -39,5 +39,4 @@ client.on('ready', async () => {
 
 
 
-// client.login(process.env.DISCORD_TOKEN);
-client.login('ODU1OTg0MTE2ODczMTY2OTA4.YM6bVA.TVinRS0jGg_ux4cmUXdwSM3qUsQ');
+client.login(process.env.DISCORD_TOKEN);

@@ -25,6 +25,7 @@ module.exports = (client) => {
         const memberID = member.id
 
         // If the message includes anything about 'hacking' a dm will be created with that user
+        // Also checks if the word 'Sliding' or 'Mantling' is used.
         for (word of content.split(' ')) {
             if (hackMessages.includes(word.toLowerCase())) {
                 if (message.channel.id !== 865721400357552128) return
@@ -48,6 +49,7 @@ module.exports = (client) => {
             }
         }
 
+        // Used for the !list command
         if (content.toLowerCase().startsWith(`${prefix}list`)) {
             if (member.roles.cache.find(role => role.name === 'Moderator')) {
                 let embed = new Discord.MessageEmbed()
@@ -169,7 +171,6 @@ module.exports = (client) => {
                 dislikeCount = countReactions.split('-')[2]
             }
         }
-
 
         // Iterates through each user in the reaction and executes specfic code
         users.fetch().then(async userCollection => {
