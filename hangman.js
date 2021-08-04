@@ -146,15 +146,15 @@ module.exports = async (client) => {
         createChannel.send(startEmbed).then(() => {
             // Checks if the user sends a message and waits 15 seconds to do so.
             createChannel.awaitMessages(filter, { max: 1, time: 1000 * 15 })
-                .then((collected) => {
+                .then(async (collected) => {
                     // Makes the word the content of the message
                     word = collected.first().content
                     // Starts the game
                     currentGame = true
                     let sendChannel = message.guild.channels.cache.get(channelID)
                     let embed = new Discord.MessageEmbed().setTitle('New Game Started').setDescription(`Word is: ${word}`).setColor('#20f76b')
-                    createChannel.send(embed)
-                    hangmanGame(sendChannel, word, null, null, user.username, message.createdTimestamp)
+                    let sentEmbed = await createChannel.send(embed)
+                    hangmanGame(sendChannel, word, null, null, user.username, sentEmbed.createdTimestamp)
                 })
                 // If an error happens or nothing is inputed in 15 seconds
                 .catch(err => {
