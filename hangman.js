@@ -1,5 +1,5 @@
-const channelID = '870769102858362900'
-const createChannelID = '871126187836051548'
+const channelID = '872603033853382697'
+const createChannelID = '872603089616662539'
 const Discord = require('discord.js')
 const config = require('./config.json')
 const hangmanGame = require('./hangmanGame')
