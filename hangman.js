@@ -170,21 +170,24 @@ module.exports = async (client) => {
 
     // Function that formats the create game channel
     async function createChannelFormat() {
-        createChannel.messages.fetch().then(result => {
-            createChannel.bulkDelete(result)
-        })
-        let createEmbed = new Discord.MessageEmbed()
-            .setTitle('Start a hangman game')
-            .setDescription('React below to start a game, then type the word(s) to be used in the game.')
-            .setColor('#20f76b')
-        let embed = new Discord.MessageEmbed()
-            .setTitle('End current game')
-            .setDescription('Click the X below to end any ongoing game.')
-            .setColor('#911919')
-        let sentEmbedDelete = await createChannel.send(embed)
-        let sentEmbed = await createChannel.send(createEmbed)
-        sentEmbed.react('🆕')
-        sentEmbedDelete.react('❌')
+        if (createChannel.messages) {
+            createChannel.messages.fetch().then(result => {
+                createChannel.bulkDelete(result)
+            })
+            let createEmbed = new Discord.MessageEmbed()
+                .setTitle('Start a hangman game')
+                .setDescription('React below to start a game, then type the word(s) to be used in the game.')
+                .setColor('#20f76b')
+            let embed = new Discord.MessageEmbed()
+                .setTitle('End current game')
+                .setDescription('Click the X below to end any ongoing game.')
+                .setColor('#911919')
+            let sentEmbedDelete = await createChannel.send(embed)
+            let sentEmbed = await createChannel.send(createEmbed)
+            sentEmbed.react('🆕')
+            sentEmbedDelete.react('❌')
+        }
+
     }
 
 }
