@@ -10,8 +10,9 @@ const colorArr = ['#000000', '#c92626', '#c74e22', '#c77722', '#c7b122', '#8dc72
 const Discord = require('discord.js')
 var lives = 6
 var guessedLetters = []
+var username
 
-module.exports = (channel, word, letter = null, guess = null) => {
+module.exports = (channel, word, letter = null, guess = null, user = null) => {
     if (letter === null) { // If the game is started for the first time
         wordSpaces = []
         guessedLetters = []
@@ -20,6 +21,7 @@ module.exports = (channel, word, letter = null, guess = null) => {
         for (let i = 0; i < word.length; i++) {
             (word[i] === ' ') ? wordSpaces.push(' ') : wordSpaces.push('*')
         }
+        username = user
     } else if (letter !== 'secret') { // If the game is ongoing
         // Checks if the letter being guessed is a letter in the word
         for (let i = 0; i < word.length; i++) {
@@ -64,6 +66,7 @@ module.exports = (channel, word, letter = null, guess = null) => {
             { name: 'Guessed Letters', value: guessedLettersString, inline: true },
             { name: 'Word', value: hiddenAnswerString, inline: false }
         )
+        .setFooter(`Game started by: ${username}`)
     channel.send(embed)
 
     // If the word has been guessed
