@@ -152,6 +152,8 @@ module.exports = async (client) => {
                     // Starts the game
                     currentGame = true
                     let sendChannel = message.guild.channels.cache.get(channelID)
+                    let embed = new Discord.MessageEmbed().setTitle('New Game Started').setDescription(`Word is: ${word}`).setColor('#20f76b')
+                    createChannel.send(embed)
                     hangmanGame(sendChannel, word)
                 })
                 // If an error happens or nothing is inputed in 15 seconds
@@ -163,7 +165,7 @@ module.exports = async (client) => {
                 .finally(() => {
                     setTimeout(() => {
                         createChannelFormat()
-                    }, 1000 * 3)
+                    }, 1000 * 1)
                 })
         })
     })
