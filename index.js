@@ -6,10 +6,12 @@ const mongo = require('./mongo')
 const suggestionChannel = require('./suggestion-channel');
 const config = require('./config.json');
 const roleReactions = require('./role-reactions');
+const hangman = require('./hangman');
 
 client.on('ready', async () => {
     console.log('The bot is ready!');
     suggestionChannel(client)
+    hangman(client)
     // roleReactions(client)
 
     await mongo().then(mongoose => {
