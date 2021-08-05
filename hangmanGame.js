@@ -32,7 +32,7 @@ module.exports = (channel, word, letter = null, guess = null, user = null, times
     } else if (letter !== 'secret') { // If the game is ongoing
         // Checks if the letter being guessed is a letter in the word
         for (let i = 0; i < word.length; i++) {
-            if (word[i] === letter) {
+            if (word[i].toLowerCase() === letter) {
                 wordSpaces[i] = letter
             }
         }
