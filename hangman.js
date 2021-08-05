@@ -83,7 +83,7 @@ module.exports = async (client) => {
                     return
                 }
                 // Updates the game with the new letter
-                if (hangmanGame(channel, word, command[1]) === 'game over') {
+                if (hangmanGame(channel, word, command[1].toLowerCase()) === 'game over') {
                     currentGame = false
                 }
             }
@@ -154,7 +154,7 @@ module.exports = async (client) => {
                     let sendChannel = message.guild.channels.cache.get(channelID)
                     let embed = new Discord.MessageEmbed().setTitle('New Game Started').setDescription(`Word is: ${word}`).setColor('#20f76b')
                     let sentEmbed = await createChannel.send(embed)
-                    hangmanGame(sendChannel, word, null, null, user.username, sentEmbed.createdTimestamp)
+                    hangmanGame(sendChannel, word, null, null, user.username, sentEmbeds.createdTimestamp)
                 })
                 // If an error happens or nothing is inputed in 15 seconds
                 .catch(err => {

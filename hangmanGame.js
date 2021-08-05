@@ -7,6 +7,7 @@ const artArr = [`\n +------+\n |      |\n O      |\n/|${"\\"}     |\n/ ${"\\"}  
     `\n +------+\n |      |\n O      |\n        |\n        |\n        |\n==========`,
     `\n +------+\n |      |\n        |\n        |\n        |\n        |\n==========`]
 const colorArr = ['#000000', '#c92626', '#c74e22', '#c77722', '#c7b122', '#8dc722', '#4ec722']
+const punctuationArr = [' ', '.', ',', '?', '!']
 const Discord = require('discord.js')
 var lives = 6
 var guessedLetters = []
@@ -20,7 +21,11 @@ module.exports = (channel, word, letter = null, guess = null, user = null, times
         lives = 6
         // Creates the hidden word
         for (let i = 0; i < word.length; i++) {
-            (word[i] === ' ') ? wordSpaces.push(' ') : wordSpaces.push('*')
+            if (punctuationArr.includes(word[i])) {
+                wordSpaces.push(punctuationArr[punctuationArr.indexOf(word[i])])
+            } else {
+                wordSpaces.push('*')
+            }
         }
         username = user
         time = timestamp
