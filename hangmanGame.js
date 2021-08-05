@@ -46,7 +46,7 @@ module.exports = (channel, word, letter = null, guess = null, user = null, times
         }
     }
     if (guess) {
-        if (guess === word) {
+        if (guess.toLowerCase() === word.toLowerCase()) {
             wordSpaces = word
             var hiddenAnswerString = ("```" + wordSpaces + "```")
         } else {
