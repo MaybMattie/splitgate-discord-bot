@@ -6,6 +6,7 @@ const hangmanGame = require('./hangmanGame')
 const { prefix } = config
 var currentGame = false
 var word = []
+var waiting = false
 
 
 // Art
@@ -112,6 +113,8 @@ module.exports = async (client) => {
         // Deconstructs variables as well as checks if the right reaction was changed
         if (user.id === client.user.id) return;
         const { emoji, message } = messageReaction
+        if (waiting) return
+        waiting = true
         if (message.channel.id !== createChannelID) return
         if (emoji.name !== '🆕' && emoji.name !== '❌') return
         if (emoji.name === '❌') {
@@ -166,6 +169,7 @@ module.exports = async (client) => {
                     setTimeout(() => {
                         createChannelFormat()
                     }, 1000 * 1)
+                    waiting = false
                 })
         })
     })
