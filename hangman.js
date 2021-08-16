@@ -129,6 +129,7 @@ module.exports = async (client) => {
             setTimeout(() => {
                 createChannelFormat()
             }, 1000 * 3)
+            waiting = false
             return
         }
         if (currentGame) {
