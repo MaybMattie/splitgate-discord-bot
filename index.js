@@ -10,17 +10,17 @@ const hangman = require('./hangman');
 
 client.on('ready', async () => {
     console.log('The bot is ready!');
-    suggestionChannel(client)
+    // suggestionChannel(client)
     hangman(client)
     // roleReactions(client)
 
-    await mongo().then(mongoose => {
-        try {
-            console.log('Connected to mongo!')
-        } finally {
-            mongoose.connection.close()
-        }
-    })
+    // await mongo().then(mongoose => {
+    //     try {
+    //         console.log('Connected to mongo!')
+    //     } finally {
+    //         mongoose.connection.close()
+    //     }
+    // })
 
     const baseFile = 'command-base.js';
     const commandBase = require(`./commands/${baseFile}`);
