@@ -63,6 +63,7 @@ module.exports = async (client) => {
                     setTimeout(() => {
                         sentEmbed.delete()
                     }, 1000 * 2)
+                    message.delete()
                     return
                 }
                 if (command[1].length > 1) {
@@ -71,6 +72,7 @@ module.exports = async (client) => {
                     setTimeout(() => {
                         reply.delete()
                     }, 1000 * 3)
+                    message.delete()
                     return
                 }
 
@@ -81,6 +83,7 @@ module.exports = async (client) => {
                     setTimeout(() => {
                         reply.delete()
                     }, 1000 * 3)
+                    message.delete()
                     return
                 }
                 // Updates the game with the new letter
@@ -96,6 +99,7 @@ module.exports = async (client) => {
                     setTimeout(() => {
                         sentEmbed.delete()
                     }, 1000 * 2)
+                    message.delete()
                     return
                 }
                 let guess = command.slice(1).join(' ')
@@ -111,6 +115,7 @@ module.exports = async (client) => {
                     setTimeout(() => {
                         sentEmbed.delete()
                     }, 1000 * 2)
+                    message.delete()
                     return
                 }
                 hangmanGame(channel, word, 'resending')
