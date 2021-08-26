@@ -93,6 +93,7 @@ module.exports = async (channel, word, letter = null, guess = null, user = null,
 
     // If the word has been guessed
     if (!wordSpaces.includes('*')) {
+        console.log('dafuq')
         let embed = new Discord.MessageEmbed().setTitle("YOU WIN!").setColor('#9b22c7')
         channel.send(embed)
         return 'game over'
