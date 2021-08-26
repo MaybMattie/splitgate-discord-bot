@@ -99,7 +99,7 @@ module.exports = async (client) => {
                     return
                 }
                 let guess = command.slice(1).join(' ')
-                if (hangmanGame(channel, word, 'secret', guess) === 'game over') {
+                if (await hangmanGame(channel, word, 'secret', guess) === 'game over') {
                     currentGame = false
                 }
                 message.delete()
