@@ -31,7 +31,7 @@ module.exports = async (channel, word, letter = null, guess = null, user = null,
         username = user
         time = timestamp
         gameMessage = null
-    } else if (letter !== 'secret') { // If the game is ongoing
+    } else if (letter !== 'secret' || letter !== 'resending') { // If the game is ongoing
         // Checks if the letter being guessed is a letter in the word
         for (let i = 0; i < word.length; i++) {
             if (word[i].toLowerCase() === letter) {
