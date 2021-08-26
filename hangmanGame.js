@@ -15,7 +15,7 @@ var username
 var time
 var gameMessage
 
-module.exports = async (channel, word, letter = null, guess = null, user = null, timestamp = null) => {
+module.exports = (channel, word, letter = null, guess = null, user = null, timestamp = null) => {
     if (letter === null) { // If the game is started for the first time
         wordSpaces = []
         guessedLetters = []
