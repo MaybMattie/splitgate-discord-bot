@@ -47,9 +47,11 @@ module.exports = async (channel, word, letter = null, guess = null, user = null,
             guessedLetters.push(letter)
         }
     }
+    console.log(word)
     if (guess) {
         if (guess.toLowerCase() === word.toLowerCase()) {
             wordSpaces = word
+            console.log(wordSpaces)
             var hiddenAnswerString = ("```" + wordSpaces + "```")
         } else {
             lives--
