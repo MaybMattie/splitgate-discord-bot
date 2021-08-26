@@ -97,6 +97,8 @@ module.exports = async (channel, word, letter = null, guess = null, user = null,
         let embed = new Discord.MessageEmbed().setTitle("YOU WIN!").setColor('#9b22c7')
         channel.send(embed)
         return 'game over'
+    } else {
+        console.log('this broke or somethin')
     }
 
     // If the game is over
