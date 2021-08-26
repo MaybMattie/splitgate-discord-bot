@@ -102,7 +102,7 @@ module.exports = async (client) => {
                 if (hangmanGame(channel, word, 'secret', guess) === 'game over') {
                     currentGame = false
                 }
-                // message.delete()
+                message.delete()
             }
             // if (command[0] === `${prefix}resend`) {
             //     if (!currentGame) {
