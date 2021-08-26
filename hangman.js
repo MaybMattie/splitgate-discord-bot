@@ -20,7 +20,7 @@ const art6 = `\n +------+\n |      |\n O      |\n/|${"\\"}     |\n/ ${"\\"}     
 
 
 module.exports = async (client) => {
-    let createChannel = client.guilds.cache.get('327997395650740225').channels.cache.get(createChannelID)
+    let createChannel = client.guilds.cache.get('880240187534356501').channels.cache.get(createChannelID)
 
     // Checks messages
     client.on('message', async (message) => {
