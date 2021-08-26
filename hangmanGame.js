@@ -86,6 +86,7 @@ module.exports = async (channel, word, letter = null, guess = null, user = null,
     // } else {
     //     gameMessage.edit('', embed)
     // }
+    channel.send(embed)
 
     // If the word has been guessed
     if (!wordSpaces.includes('*')) {
