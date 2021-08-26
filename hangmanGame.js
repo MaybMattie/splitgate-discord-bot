@@ -47,11 +47,11 @@ module.exports = (channel, word, letter = null, guess = null, user = null, times
             guessedLetters.push(letter)
         }
     }
-    console.log(`this is the word to guess: ${word}`)
+    // console.log(`this is the word to guess: ${word}`)
     if (guess) {
         if (guess.toLowerCase() === word.toLowerCase()) {
             wordSpaces = word
-            console.log(`this is after the word was guessed correctly: ${wordSpaces}`)
+            // console.log(`this is after the word was guessed correctly: ${wordSpaces}`)
             var hiddenAnswerString = ("```" + wordSpaces + "```")
         } else {
             lives--
@@ -79,28 +79,25 @@ module.exports = (channel, word, letter = null, guess = null, user = null, times
         )
         .setFooter(`Game started by: ${username}`)
         .setTimestamp(time)
-    // if (letter === 'secret') {
-    //     channel.send(embed)
-    //     return
-    // }
-    // if (!gameMessage) {
-    //     gameMessage = await channel.send(embed)
-    // } else {
-    //     gameMessage.edit('', embed)
-    // }
-    channel.send(embed)
-    console.log(`this is after the embed is sent: ${wordSpaces}`)
+    if (letter === 'resending') {
+        channel.send(embed)
+        return
+    }
+    if (!gameMessage) {
+        gameMessage = await channel.send(embed)
+    } else {
+        gameMessage.edit('', embed)
+    }
+    // channel.send(embed)
+    // console.log(`this is after the embed is sent: ${wordSpaces}`)
 
     // If the word has been guessed
     if (!wordSpaces.includes('*')) {
-        console.log('dafuq')
+        // console.log('dafuq')
         let embed = new Discord.MessageEmbed().setTitle("YOU WIN!").setColor('#9b22c7')
         channel.send(embed)
         return 'game over'
-    } else {
-        console.log('this broke or somethin')
-    }
-
+    } 
     // If the game is over
     if (lives === 0) {
         console.log(word)
