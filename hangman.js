@@ -87,6 +87,7 @@ module.exports = async (client) => {
                 if (hangmanGame(channel, word, command[1].toLowerCase()) === 'game over') {
                     currentGame = false
                 }
+                message.delete()
             }
             if (command[0] === `${prefix}word`) {
                 if (!currentGame) {
@@ -101,6 +102,7 @@ module.exports = async (client) => {
                 if (hangmanGame(channel, word, 'secret', guess) === 'game over') {
                     currentGame = false
                 }
+                message.delete()
             }
         }
     })

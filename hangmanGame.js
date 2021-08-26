@@ -13,8 +13,9 @@ var lives = 6
 var guessedLetters = []
 var username
 var time
+var gameMessage
 
-module.exports = (channel, word, letter = null, guess = null, user = null, timestamp = null) => {
+module.exports = async (channel, word, letter = null, guess = null, user = null, timestamp = null) => {
     if (letter === null) { // If the game is started for the first time
         wordSpaces = []
         guessedLetters = []
@@ -29,6 +30,7 @@ module.exports = (channel, word, letter = null, guess = null, user = null, times
         }
         username = user
         time = timestamp
+        gameMessage = null
     } else if (letter !== 'secret') { // If the game is ongoing
         // Checks if the letter being guessed is a letter in the word
         for (let i = 0; i < word.length; i++) {
@@ -75,7 +77,11 @@ module.exports = (channel, word, letter = null, guess = null, user = null, times
         )
         .setFooter(`Game started by: ${username}`)
         .setTimestamp(time)
-    channel.send(embed)
+    if (!gameMessage) {
+        gameMessage = await channel.send(embed)
+    } else {
+        gameMessage.edit('', embed)
+    }
 
     // If the word has been guessed
     if (!wordSpaces.includes('*')) {
