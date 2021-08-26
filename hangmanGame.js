@@ -47,11 +47,11 @@ module.exports = async (channel, word, letter = null, guess = null, user = null,
             guessedLetters.push(letter)
         }
     }
-    console.log(word)
+    console.log(`this is the word to guess: ${prefix}`)
     if (guess) {
         if (guess.toLowerCase() === word.toLowerCase()) {
             wordSpaces = word
-            console.log(wordSpaces)
+            console.log(`this is after the word was guessed correctly: ${wordSpaces}`)
             var hiddenAnswerString = ("```" + wordSpaces + "```")
         } else {
             lives--
@@ -89,7 +89,7 @@ module.exports = async (channel, word, letter = null, guess = null, user = null,
     //     gameMessage.edit('', embed)
     // }
     channel.send(embed)
-    console.log(wordSpaces)
+    console.log(`this is after the embed is sent: ${wordSpaces}`)
 
     // If the word has been guessed
     if (!wordSpaces.includes('*')) {
