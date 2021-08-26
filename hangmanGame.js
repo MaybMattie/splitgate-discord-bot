@@ -47,7 +47,7 @@ module.exports = async (channel, word, letter = null, guess = null, user = null,
             guessedLetters.push(letter)
         }
     }
-    console.log(`this is the word to guess: ${prefix}`)
+    console.log(`this is the word to guess: ${word}`)
     if (guess) {
         if (guess.toLowerCase() === word.toLowerCase()) {
             wordSpaces = word
