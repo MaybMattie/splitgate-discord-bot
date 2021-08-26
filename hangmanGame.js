@@ -77,6 +77,10 @@ module.exports = async (channel, word, letter = null, guess = null, user = null,
         )
         .setFooter(`Game started by: ${username}`)
         .setTimestamp(time)
+    if (letter === 'secret') {
+        channel.send(embed)
+        return
+    }
     if (!gameMessage) {
         gameMessage = await channel.send(embed)
     } else {
