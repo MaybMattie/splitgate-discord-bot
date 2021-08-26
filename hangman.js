@@ -102,20 +102,20 @@ module.exports = async (client) => {
                 if (hangmanGame(channel, word, 'secret', guess) === 'game over') {
                     currentGame = false
                 }
-                message.delete()
+                // message.delete()
             }
-            if (command[0] === `${prefix}resend`) {
-                if (!currentGame) {
-                    let embed = new Discord.MessageEmbed().setTitle('No active game!')
-                    let sentEmbed = await channel.send(embed)
-                    setTimeout(() => {
-                        sentEmbed.delete()
-                    }, 1000 * 2)
-                    return
-                }
-                hangmanGame(channel, word, 'secret')
-                message.delete()
-            }
+            // if (command[0] === `${prefix}resend`) {
+            //     if (!currentGame) {
+            //         let embed = new Discord.MessageEmbed().setTitle('No active game!')
+            //         let sentEmbed = await channel.send(embed)
+            //         setTimeout(() => {
+            //             sentEmbed.delete()
+            //         }, 1000 * 2)
+            //         return
+            //     }
+            //     hangmanGame(channel, word, 'secret')
+            //     message.delete()
+            // }
         }
     })
 
