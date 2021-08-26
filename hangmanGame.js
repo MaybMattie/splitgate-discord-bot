@@ -81,11 +81,11 @@ module.exports = async (channel, word, letter = null, guess = null, user = null,
         channel.send(embed)
         return
     }
-    if (!gameMessage) {
-        gameMessage = await channel.send(embed)
-    } else {
-        gameMessage.edit('', embed)
-    }
+    // if (!gameMessage) {
+    //     gameMessage = await channel.send(embed)
+    // } else {
+    //     gameMessage.edit('', embed)
+    // }
 
     // If the word has been guessed
     if (!wordSpaces.includes('*')) {
