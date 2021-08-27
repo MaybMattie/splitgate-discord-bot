@@ -11,6 +11,7 @@ module.exports = (client) => {
             if (monkeySpam) {
                 let embed = new Discord.MessageEmbed().setTitle("Tyler's Monkey Spam").setDescription('Monkey Spam **OFF**').setColor('#FF0000')
                 let sentEmbed = await channel.send(embed)
+                monkeySpam = false
                 setTimeout(() => {
                     sentEmbed.delete()
                 }, 1000 * 3)
@@ -18,6 +19,7 @@ module.exports = (client) => {
             } else {
                 let embed = new Discord.MessageEmbed().setTitle("Tyler's Monkey Spam").setDescription('Monkey Spam **ON**').setColor('#00FF00')
                 let sentEmbed = await channel.send(embed)
+                monkeySpam = true
                 setTimeout(() => {
                     sentEmbed.delete()
                 }, 1000 * 3)
