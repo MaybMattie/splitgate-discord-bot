@@ -3,6 +3,14 @@ const tylerID = '627300050673991680'
 const mattieID = '204690262977544192'
 var monkeySpam = false
 
+const monkeyGifs = ['https://tenor.com/view/monkey-banana-gif-7848605',
+'https://tenor.com/view/leon-side-eyes-leon-ok-and-leon-monkey-eyes-side-eyes-ok-and-gif-22597413',
+'https://tenor.com/view/uh-oh-stinky-monkey-gif-15325836',
+'https://tenor.com/view/mokey-monkey-monkey-dance-dancing-monkey-monkey-dancing-gif-19821717',
+'https://tenor.com/view/monkey-licking-chimp-licking-monkey-camera-licking-camera-monkey-licking-camera-gif-20234087',
+'https://tenor.com/view/monkey-dancing-monkey-dance-gif-13114207',
+'https://tenor.com/view/monkey-monki-crazy-calm-gif-18390175']
+
 module.exports = (client) => {
     client.on('message', async (message) => {
         const { channel, member, content, guild } = message
@@ -27,7 +35,8 @@ module.exports = (client) => {
             }
         }
         if (member.id === tylerID && monkeySpam) {
-            message.reply('https://tenor.com/view/monkey-monki-crazy-calm-gif-18390175')
+            let number = Math.floor(monkeyGifs.length() * Math.random())
+            message.reply(monkeyGifs[number])
             return
         }
         if (content.toLowerCase().includes('among') && content.toLowerCase().includes('us')) {
