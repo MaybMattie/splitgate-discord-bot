@@ -9,7 +9,8 @@ const monkeyGifs = ['https://tenor.com/view/monkey-banana-gif-7848605',
 'https://tenor.com/view/mokey-monkey-monkey-dance-dancing-monkey-monkey-dancing-gif-19821717',
 'https://tenor.com/view/monkey-licking-chimp-licking-monkey-camera-licking-camera-monkey-licking-camera-gif-20234087',
 'https://tenor.com/view/monkey-dancing-monkey-dance-gif-13114207',
-'https://tenor.com/view/monkey-monki-crazy-calm-gif-18390175']
+'https://tenor.com/view/monkey-monki-crazy-calm-gif-18390175',
+'https://tenor.com/view/monkey-drive-boat-gif-8811572']
 
 module.exports = (client) => {
     client.on('message', async (message) => {
@@ -35,7 +36,7 @@ module.exports = (client) => {
             }
         }
         if (member.id === tylerID && monkeySpam) {
-            let number = Math.floor(monkeyGifs.length() * Math.random())
+            let number = Math.floor(monkeyGifs.length * Math.random())
             message.reply(monkeyGifs[number])
             return
         }
